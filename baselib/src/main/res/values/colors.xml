@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#D81B60</color>
+    <color name="blue00a0f0">#00a0f0</color>
+    <color name="color_line">#f0f0f0</color>
+    <color name="color_eb">#ebebeb</color>
+    <color name="color_ed">#ededed</color>
+    <color name="color_green">#80FFFF</color>
+    <color name="red">#EC4E45</color>
+    <color name="pure_black">#313131</color>
+    <color name="white">#ffffff</color>
+    <color name="whitef6">#f6f6f6</color>
+    <color name="whitef5">#f5f5f5</color>
+    <color name="black777">#777777</color>
+    <color name="black888">#888888</color>
+    <color name="black333">#333333</color>
+    <color name="black444">#444444</color>
+    <color name="black999">#999999</color>
+    <color name="blacka9">#a9a9a9</color>
+    <color name="grayce">#cecece</color>
+    <color name="grayb0">#b0b0b0</color>
+    <color name="graye7">#E7E7E9</color>
+    <color name="tab">#fe3d76</color>
+    <color name="black666">#666666</color>
+    <color name="shop_cart_red">#B91E30</color>
+    <color name="head_lin_black">#FF262521</color>
+    <color name="popup_dark">#66000000</color>
+    <color name="user_head">#44454e</color>
+</resources>

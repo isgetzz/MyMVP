@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/fail_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/f6"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:visibility="gone">
+
+    <ImageView
+        android:id="@+id/fail_image"
+        android:layout_width="@dimen/x147"
+        android:layout_height="@dimen/x147"
+        android:src="@drawable/load_fail" />
+
+    <TextView
+        android:layout_marginTop="@dimen/x20"
+        style="@style/Gray9Text11"
+        android:text="@string/load_fail_hint" />
+    <Button
+        style="@style/Base.Widget.AppCompat.Button.Borderless"
+        android:id="@+id/fail_bt"
+        android:layout_width="@dimen/x110"
+        android:layout_height="@dimen/x25"
+        android:layout_marginTop="@dimen/x50"
+        android:layout_marginBottom="@dimen/x15"
+        android:background="@drawable/reload_selector"
+        android:text="@string/reload"
+        android:textColor="@color/gray999"
+        android:textSize="@dimen/x10" />
+</LinearLayout>

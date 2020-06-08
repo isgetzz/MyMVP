@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name" translatable="false">BaseLib</string>
+    <string name="write_permission_hint" translatable="false">在设置-应用-App-权限管理中开启存储空间权限，以正常使用相关功能</string>
+</resources>

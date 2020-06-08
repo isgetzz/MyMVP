@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="IconImageView">
+        <!--图标的资源-->
+        <attr name="iiv_icon" format="reference" />
+        <!--图标缩放的比例, 默认是0.5-->
+        <attr name="iiv_icon_scale" format="float" />
+        <!--图标是否显示, 默认是true-->
+        <attr name="iiv_is_show" format="boolean" />
+    </declare-styleable>
+    <declare-styleable name="BezierBannerView">
+        <attr name="bbv_selectedColor" format="color" />
+        <attr name="bbv_unSelectedColor" format="color" />
+        <attr name="bbv_selectedRadius" format="dimension" />
+        <attr name="bbv_unSelectedRadius" format="dimension" />
+        <attr name="bbv_spacing" format="dimension" />
+    </declare-styleable>
+    <!-- 菊花进度条-->
+    <attr name="MiniLoadingStyle" format="reference" />
+    <declare-styleable name="MiniLoadingView">
+        <!--loading控件的大小，默认32dp-->
+        <attr name="mlv_loading_view_size" format="dimension" />
+        <!--loading控件的颜色，默认白色-->
+        <attr name="mlv_loading_view_color" format="color" />
+    </declare-styleable>
+
+    <!-- 带logo进度条-->
+    <!--LoadingView-->
+    <declare-styleable name="LoadingView">
+        <!--loading加载画笔的粗细-->
+        <attr name="lv_width" format="dimension" />
+        <!--loading加载画笔的颜色-->
+        <attr name="lv_color" format="color" />
+        <!--loading加载旋转的速度-->
+        <attr name="lv_speed" format="integer" />
+        <!--是否有loading中心的图标， 默认是true-->
+        <attr name="lv_has_icon" format="boolean" />
+        <!--loading中心的图标-->
+        <attr name="lv_icon" format="reference" />
+        <!--loading中心图标缩放的比例, 默认是0.5-->
+        <attr name="lv_icon_scale" format="float" />
+        <!--圆弧的角度-->
+        <attr name="lv_arc_degree" format="integer" />
+        <!--是否自动旋转，无需人工控制，默认是true-->
+        <attr name="lv_auto" format="boolean" />
+        <!--是否单弧旋转，默认false-->
+        <attr name="lv_arc_single" format="boolean" />
+    </declare-styleable>
+</resources>

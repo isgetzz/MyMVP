@@ -1,0 +1,67 @@
+<resources>
+    <!--基础类-->
+    <style name="BaseText">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="BaseLinear">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+
+    <style name="BaseLinearWhite" parent="BaseLinear">
+        <item name="android:background">@android:color/white</item>
+    </style>
+
+    <style name="BaseLinearF6" parent="BaseLinear">
+        <item name="android:background">@color/f6</item>
+    </style>
+
+    <style name="BaseLine1">
+        <item name="android:background">@color/line</item>
+        <item name="android:layout_height">0.5dp</item>
+        <item name="android:layout_width">match_parent</item>
+    </style>
+
+    <style name="BaseLine20">
+        <item name="android:background">@color/line</item>
+        <item name="android:layout_height">@dimen/x8</item>
+        <item name="android:layout_width">match_parent</item>
+    </style>
+
+    <style name="ToastText" parent="BaseText">
+        <item name="android:textSize">@dimen/x12</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:paddingLeft">@dimen/x10</item>
+        <item name="android:paddingTop">@dimen/x6</item>
+        <item name="android:paddingRight">@dimen/x10</item>
+        <item name="android:paddingBottom">@dimen/x6</item>
+    </style>
+
+    <style name="HorizontalLinearWhite" parent="BaseLinearWhite">
+        <item name="android:orientation">horizontal</item>
+    </style>
+
+    <style name="HorizontalLinearF6" parent="BaseLinearF6">
+        <item name="android:orientation">horizontal</item>
+    </style>
+
+    <style name="VerticalLinearWhite" parent="BaseLinearWhite">
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="VerticalLinearF6" parent="BaseLinearF6">
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="Gray9Text11" parent="BaseText">
+        <item name="android:textColor">@color/gray999</item>
+        <item name="android:textSize">@dimen/x11</item>
+    </style>
+
+    <style name="Text9" parent="BaseText">
+        <item name="android:textSize">@dimen/x9</item>
+    </style>
+
+</resources>
