@@ -4,14 +4,25 @@ import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.app.ccmvp.R;
 import com.app.ccmvp.util.StatusBarUtil;
+import com.app.ccmvp.util.Utils;
 import com.app.ccmvp.view.activity.MainActivity;
+import com.baselib.customView.MiniLoadingView;
+import com.baselib.dialog.MiniLoadingDialog;
 import com.baselib.dialog.RequestPermissionDialog;
 import com.yanzhenjie.permission.AndPermission;
 import com.yanzhenjie.permission.runtime.Permission;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 /**
  * Created by cc on 2018/10/30.
@@ -20,6 +31,13 @@ import com.yanzhenjie.permission.runtime.Permission;
 public abstract class BaseActivity<P extends BasePresenter> extends AppCompatActivity {
     private long lastClick = 0;
     protected P mPresenter;
+    private Unbinder unbinder;
+    @BindView(R.id.fail_layout)
+    LinearLayout fail_layout;
+    @BindView(R.id.fail_image)
+    ImageView fail_image;
+    FrameLayout fl_main;
+    public MiniLoadingDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,22 +52,20 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
         //设置进入退出动画
         setTheme(android.R.style.Animation_Activity);
         StatusBarUtil.darkMode(this);
+        setContentView(R.layout.activity_base);
+        fl_main = findViewById(R.id.fl_main);
         View view = LayoutInflater.from(this).inflate(BindLayout(), null);
-        setContentView(view);
+        fl_main.addView(view);
+        unbinder = ButterKnife.bind(this);
         if (onCreatePresenter() != null) {
             mPresenter = onCreatePresenter();
         }
+        dialog = new MiniLoadingDialog(this);
+        dialog.show();
         initUi(view);
         initData();
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (mPresenter != null) {
-            mPresenter.unSubscribe();
-        }
-    }
 
     private boolean fastClick() {
         if (System.currentTimeMillis() - lastClick <= 300) {
@@ -92,7 +108,31 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
                 }).start();
 
     }
+
+    /**
+     * 接口请求成功隐藏
+     */
+    protected void loadResult(boolean success) {
+        fail_layout.setVisibility(success ? View.GONE : View.VISIBLE);
+        fl_main.setVisibility(success ? View.VISIBLE : View.GONE);
+        if (dialog != null)
+            dialog.dismiss();
+    }
+
     protected abstract P onCreatePresenter();
-       /* 进度条 void onProgressStart();
-    void onProgressEnd();*/
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mPresenter != null) {
+            mPresenter.unSubscribe();
+        }
+        if (unbinder != null) {
+            unbinder.unbind();
+        }
+        if (dialog != null)
+            dialog.dismiss();
+        Utils.clearImgMemory(fail_image);
+    }
+
 }

@@ -1,9 +1,3 @@
 <resources>
-    <string name="app_name" translatable="false">MyMVP</string>
-    <string name="action_settings" translatable="false">Settings</string>
-    <string name="load_fail_hint" translatable="false">数据竟然没有加载出来,重新加载试试?</string>
-    <string name="network_error" translatable="false">网络加载错误,请稍后再试!</string>
-    <string name="reload" translatable="false">重新加载</string>
-    <string name="back_hint" translatable="false">再按一次退出程序</string>
-    <string name="app_id" translatable="false">讯飞申请的id</string>
+
 </resources>

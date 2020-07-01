@@ -1,11 +1,12 @@
 package com.app.ccmvp.view.activity;
 
 import android.content.Intent;
+import android.os.Environment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.core.content.ContextCompat;
@@ -17,7 +18,6 @@ import com.app.ccmvp.base.BaseActivity;
 import com.app.ccmvp.base.BaseView;
 import com.app.ccmvp.bean.SystemData;
 import com.app.ccmvp.mvp.presenter.SystemPresenter;
-import com.app.ccmvp.util.Utils;
 import com.app.ccmvp.view.custom.TabLayoutListener;
 import com.app.ccmvp.view.fragment.GoodsFragment;
 import com.app.ccmvp.view.fragment.MainFragment;
@@ -26,9 +26,13 @@ import com.app.ccmvp.view.fragment.UserFragment;
 import com.app.xui_lib.toast.XToast;
 import com.arialyy.annotations.Download;
 import com.arialyy.aria.core.Aria;
+import com.arialyy.aria.core.download.DownloadEntity;
+import com.arialyy.aria.core.inf.IEntity;
 import com.arialyy.aria.core.task.DownloadTask;
+import com.arialyy.aria.util.CommonUtil;
 import com.baselib.customView.CustomScrollViewPager;
 import com.baselib.eventBus.updateEvent;
+import com.baselib.util.InstallApkUtil;
 import com.bumptech.glide.Glide;
 import com.google.android.material.tabs.TabLayout;
 import com.yanzhenjie.permission.AndPermission;
@@ -43,16 +47,27 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
 import butterknife.OnClick;
 
 /**
  * 主页
  */
 public class MainActivity extends BaseActivity<SystemPresenter> implements BaseView<SystemData> {
-    private LinearLayout fail_layout;
-    private ImageView fail_image;
-    private TabLayout tablayout;
+    @BindView(R.id.tablayout)
+    TabLayout tablayout;
+    @BindView(R.id.tv_complete_loading)
+    TextView tv_complete_loading;
+    @BindView(R.id.progressBar)
+    ProgressBar progressBar;
+    @BindView(R.id.tv_downing)
+    TextView tv_downing;
+    @BindView(R.id.tv_speed)
+    TextView tv_speed;
     private long time = 0;
+    private long mTaskId = -1;
+    private DownloadEntity entity;
+
     @Override
     protected int BindLayout() {
         return R.layout.activity_main;
@@ -61,59 +76,68 @@ public class MainActivity extends BaseActivity<SystemPresenter> implements BaseV
     @Override
     protected void initUi(View view) {
         mPresenter.getSystemData();
-        fail_layout = findViewById(R.id.fail_layout);
-        fail_image = findViewById(R.id.fail_image);
+        Aria.download(this).register();
         EventBus.getDefault().register(this);
         RequestPermission(getString(R.string.write_permission_hint));
-        Aria.download(this).register();
-        String filePath = "/mnt/sdcard/mvp.apk";
-        try {
-            File file1 = new File(filePath);
-            if (!file1.exists()) {
-                file1.createNewFile();
-            }
-            long mTaskId = Aria.download(this)
-                    .load("http://shop.cngaoluo.com/app/gaoluo.apk")     //读取下载地址
-                    .setFilePath(filePath)//读取下载地址
-                    .ignoreFilePathOccupy()
-                    //  .option(option)
-                    .ignoreCheckPermissions()
-                    .create();
-
-            Log.e("running2", file1.getAbsolutePath() + "==" + filePath);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     //ThreadMode.MAIN 主线程调用更新Ui ThreadMode.POSTING 发送消息在哪个线程这个也在哪里调用
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onUpdata(updateEvent message) {
-        Log.e("running3", message.isUpdate() + "=");
     }
 
     //在这里处理任务执行中的状态，如进度进度条的刷新
     @Download.onTaskRunning
     protected void running(DownloadTask task) {
-        //当前下载的进度1.00M
-        String progress = task.getConvertCurrentProgress();
-        int p = task.getPercent();    //任务进度百分比
         String speed = task.getConvertSpeed();    //转换单位后的下载速度，单位转换需要在配置文件中打开
-        Log.e("running", progress + "==" + p + "==" + speed);
+        //任务进度百分比
+        progressBar.setProgress(task.getPercent());
+        tv_speed.setText(task.getConvertSpeed());
+        tv_downing.setText(getString(R.string.string_down_progress, task.getConvertCurrentProgress(), task.getConvertFileSize()));
+
     }
 
     @Download.onTaskComplete
     void taskComplete(DownloadTask task) {
         //在这里处理任务完成的状态
         EventBus.getDefault().post(new updateEvent(true));
-        Log.e("running1", task.getFilePath() + "=");
+        InstallApkUtil.Install(this, task.getFilePath());
+
     }
 
-    @OnClick(R.id.fail_bt)
+    @OnClick({R.id.fail_bt, R.id.tv_complete_loading})
     protected void onClickView(View view) {
         switch (view.getId()) {
             case R.id.fail_bt:
+                dialog.show();
                 mPresenter.getSystemData();
+                break;
+            case R.id.tv_complete_loading:
+                String filePath = "/mnt/sdcard/mvp.apk";
+                try {
+                    File file1 = new File(filePath);
+                    if (!file1.exists()) {
+                        file1.createNewFile();
+                    }
+                    if (mTaskId == -1) {
+                        mTaskId = Aria.download(this)
+                                .load(SystemData.systemSetting.getAndroid_downurl())
+                                .setFilePath(filePath)
+                                .create();
+                        tv_complete_loading.setText(getString(R.string.stop));
+                        break;
+                    }
+                    if (Aria.download(this).load(mTaskId).isRunning()) {
+                        Aria.download(this).load(mTaskId).stop();
+                        tv_complete_loading.setText(getString(R.string.recover));
+                    } else {
+                        Aria.download(this).load(mTaskId).resume();
+                        tv_complete_loading.setText(getString(R.string.stop));
+                    }
+                    break;
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 break;
         }
     }
@@ -126,19 +150,36 @@ public class MainActivity extends BaseActivity<SystemPresenter> implements BaseV
     @Override
     public void onSucceed(SystemData data) {
         SystemData.systemSetting = data.getData();
-        fail_layout.setVisibility(View.GONE);
+        entity = Aria.download(this).getFirstDownloadEntity(data.getData().getAndroid_downurl());
+        if (entity != null) {
+            mTaskId = entity.getId();
+            tv_downing.setText(getString(R.string.string_down_progress, CommonUtil.formatFileSize(entity.getCurrentProgress()), CommonUtil.formatFileSize(entity.getFileSize())));
+            int p = (int) (entity.getCurrentProgress() * 100 / entity.getFileSize());
+            progressBar.setProgress(p);
+            tv_complete_loading.setEnabled(entity.getState() != DownloadEntity.STATE_RUNNING);
+            setLoadState();
+/*
+            if (entity.getState() == DownloadEntity.STATE_COMPLETE) {
+                InstallApkUtil.Install(this, entity.getFilePath());
+            }
+*/
+            //安装完成可以删除任务跟文件，相同地址生成的id 相同预防重复下载
+            Aria.download(this).load(mTaskId).cancel(true);
+        } else {
+            tv_complete_loading.setEnabled(true);
+        }
+        loadResult(true);
         initPager();
     }
 
     @Override
     public void onFail(String err) {
-        fail_layout.setVisibility(View.VISIBLE);
+        loadResult(false);
         XToast.normal(this, err).show();
     }
 
     private void initPager() {
         CustomScrollViewPager viewPager = findViewById(R.id.viewpager);
-        tablayout = findViewById(R.id.tablayout);
         List<Fragment> list = new ArrayList<>();
         list.add(new MainFragment());
         list.add(new GoodsFragment());
@@ -195,11 +236,49 @@ public class MainActivity extends BaseActivity<SystemPresenter> implements BaseV
             }
         }
     }
+
     @Override
     protected void onDestroy() {
-        Utils.clearImgMemory(fail_image);
         Aria.download(this).unRegister();
         EventBus.getDefault().unregister(this);
         super.onDestroy();
+    }
+
+    public void setLoadState() {
+        String btStr = "";
+        String stateStr = "";
+        switch (entity.getState()) {
+            case IEntity.STATE_WAIT:
+                btStr = getResources().getString(R.string.start);
+                stateStr = getResources().getString(R.string.waiting);
+                break;
+            case IEntity.STATE_OTHER:
+            case IEntity.STATE_FAIL:
+                btStr = getResources().getString(R.string.start);
+                stateStr = getResources().getString(R.string.load_fail_hint);
+                break;
+            case IEntity.STATE_STOP:
+                btStr = getResources().getString(R.string.recover);
+                stateStr = getResources().getString(R.string.stop);
+                break;
+            case IEntity.STATE_PRE:
+            case IEntity.STATE_POST_PRE:
+            case IEntity.STATE_RUNNING:
+                btStr = getResources().getString(R.string.stop);
+                stateStr = entity.getConvertSpeed();
+                break;
+            case IEntity.STATE_COMPLETE:
+                btStr = getResources().getString(R.string.re_start);
+                stateStr = getResources().getString(R.string.completed);
+                break;
+            case IEntity.STATE_CANCEL:
+                btStr = getResources().getString(R.string.close);
+                break;
+            default:
+                btStr = getResources().getString(R.string.start);
+                stateStr = "";
+                break;
+        }
+        tv_complete_loading.setText(btStr);
     }
 }

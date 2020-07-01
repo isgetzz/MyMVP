@@ -1,12 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
-    <color name="f6">#f6f6f6</color>
-    <color name="line">#f0f0f0</color>
-    <color name="gray999">#999999</color>
-    <color name="grayce">#cecece</color>
-    <color name="tab">#fe3d76</color>
-    <color name="black6">#666666</color>
+
 </resources>

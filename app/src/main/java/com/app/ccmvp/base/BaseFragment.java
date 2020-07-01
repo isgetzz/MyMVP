@@ -11,6 +11,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
+
 /**
  * Created by cc on 2018/11/5.
  */
@@ -24,6 +27,7 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
     protected P mPresenter;
     protected Context context;
     protected Activity activity;
+    protected Unbinder unbinder;
 
     @Nullable
     @Override
@@ -32,6 +36,7 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
         context = getContext();
         activity = getActivity();
         isInit = true;
+        unbinder = ButterKnife.bind(this, view);
         isCanLoadData();
         return view;
     }
@@ -133,6 +138,8 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
         super.onDestroyView();
         isInit = false;
         isLoad = false;
+        if (unbinder != null)
+            unbinder.unbind();
     }
 
     protected abstract P onCreatePresenter();

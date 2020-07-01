@@ -8,6 +8,7 @@ android {
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     repositories {
@@ -81,4 +82,8 @@ dependencies {
     //文件下载
     implementation 'com.arialyy.aria:core:3.8.7'
     annotationProcessor 'com.arialyy.aria:compiler:3.8.7'
+    //方法超过限制
+    implementation 'androidx.multidex:multidex:2.0.1'
+    implementation 'com.jakewharton:butterknife:10.2.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.1'
 }

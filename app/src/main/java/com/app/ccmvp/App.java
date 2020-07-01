@@ -1,10 +1,12 @@
 package com.app.ccmvp;
 
 import android.app.Application;
+import android.content.Context;
 import android.os.Process;
 import android.text.TextUtils;
 
-import com.app.ccmvp.bean.SystemData;
+import androidx.multidex.MultiDex;
+
 import com.iflytek.cloud.SpeechConstant;
 import com.iflytek.cloud.SpeechUtility;
 
@@ -18,6 +20,7 @@ import java.io.IOException;
 public class App extends Application {
 
     private static App mContext;
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -70,5 +73,11 @@ public class App extends Application {
             }
         }
         return null;
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(newBase);
+        MultiDex.install(this);
     }
 }

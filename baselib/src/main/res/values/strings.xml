@@ -1,4 +1,23 @@
 <resources>
-    <string name="app_name" translatable="false">BaseLib</string>
     <string name="write_permission_hint" translatable="false">在设置-应用-App-权限管理中开启存储空间权限，以正常使用相关功能</string>
+    <string name="app_name" translatable="false">MyMVP</string>
+    <string name="action_settings" translatable="false">Settings</string>
+    <string name="load_fail_hint" translatable="false">数据竟然没有加载出来,重新加载试试?</string>
+    <string name="network_error" translatable="false">网络加载错误,请稍后再试!</string>
+    <string name="reload" translatable="false">重新加载</string>
+    <string name="back_hint" translatable="false">再按一次退出程序</string>
+    <string name="app_id" translatable="false">讯飞申请的id</string>
+    <string name="stop" translatable="false">停止</string>
+    <string name="load_state" translatable="false">已停止</string>
+    <string name="recover" translatable="false">恢复</string>
+    <string name="start" translatable="false">开始</string>
+    <string name="loading" translatable="false">数据加载中…</string>
+    <string name="completed" translatable="false">已完成</string>
+    <string name="state_error" translatable="false">任务已失败</string>
+    <string name="waiting" translatable="false">等待中</string>
+    <string name="re_start" translatable="false">重新开始</string>
+    <string name="close" translatable="false">关闭</string>
+    <string name="float_down_progress" translatable="false">%f/%f</string>
+    <string name="string_down_progress" translatable="false">%s/%s</string>
+
 </resources>
