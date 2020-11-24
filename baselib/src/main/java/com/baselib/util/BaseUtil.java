@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -110,21 +111,6 @@ public class BaseUtil {
             str2 = str2.substring(0, str2.length() - 1);
         }
         return new StringBuilder(str2).reverse().toString() + dot;
-    }
-
-    //获取手机IMEI
-    public static String getIMEI(Context context) {
-        @SuppressLint("HardwareIds") String SerialNumber = Build.SERIAL;
-        if (SerialNumber != null && !SerialNumber.equals("")) {
-            return SerialNumber;
-        } else {
-            String ANDROID_ID = Settings.System.getString(context.getContentResolver(), Settings.System.ANDROID_ID);
-            if (ANDROID_ID == null || ANDROID_ID.equals("")) {
-                return "00:00:00";
-            } else {
-                return ANDROID_ID;
-            }
-        }
     }
 
     //获取手机IMEI
@@ -464,7 +450,9 @@ public class BaseUtil {
         editor.apply();
     }
 
-    *//**
+    */
+
+    /**
      * 存储token、user_phone
      *
      * @param token      用户登录标识
@@ -504,6 +492,28 @@ public class BaseUtil {
     }
 
     */
+
+    /**
+     * 获取系统版本号
+     *
+     * @param context 获取context 所在模块的版本号
+     * @return code
+     */
+    public static int getVersionCode(Context context) {
+        int code = 1;
+        PackageManager manager = context.getPackageManager();
+        try {
+            PackageInfo info = manager.getPackageInfo(context.getPackageName(), 0);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                code = (int) info.getLongVersionCode();
+            } else {
+                code = info.versionCode;
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return code;
+    }
 
     /**
      * 获取资源图片【和主体有关】
@@ -548,26 +558,29 @@ public class BaseUtil {
         });
 */
     }
+
     /**
-     * @Description 解决textview的问题---半角字符与全角字符混乱所致；这种情况一般就是汉字与数字、英文字母混用
      * @param input String类型
      * @return String 返回的String为半角（英文）类型
+     * @Description 解决textview的问题---半角字符与全角字符混乱所致；这种情况一般就是汉字与数字、英文字母混用
      */
     public static String ToDBC(String input) {
         char[] c = input.toCharArray();
-        for (int i = 0; i< c.length; i++) {
+        for (int i = 0; i < c.length; i++) {
             if (c[i] == 12288) {
                 c[i] = (char) 32;
                 continue;
-            }if (c[i]> 65280&& c[i]< 65375)
+            }
+            if (c[i] > 65280 && c[i] < 65375)
                 c[i] = (char) (c[i] - 65248);
         }
         return new String(c);
     }
+
     /**
      * @param input String类型
      * @return String  返回的String为全角（中文）类型
-     * @Description  解决textview的问题---半角字符与全角字符混乱所致；这种情况一般就是汉字与数字、英文字母混用
+     * @Description 解决textview的问题---半角字符与全角字符混乱所致；这种情况一般就是汉字与数字、英文字母混用
      */
     public static String toSBC(String input) { //半角转全角：
         char[] c = input.toCharArray();
@@ -580,14 +593,15 @@ public class BaseUtil {
         }
         return new String(c);
     }
+
     /**
-     * @Description 替换、过滤特殊字符
      * @param str String类型
      * @return String
+     * @Description 替换、过滤特殊字符
      */
     public static String stringFilter(String str) throws PatternSyntaxException {
-        str=str.replaceAll(" ","").replaceAll(" ","").replaceAll("：",":").replaceAll("：","：").replaceAll("【","[").replaceAll("】","]").replaceAll("！","!");//替换中文标号
-        String regEx="[『』]"; // 清除掉特殊字符
+        str = str.replaceAll(" ", "").replaceAll(" ", "").replaceAll("：", ":").replaceAll("：", "：").replaceAll("【", "[").replaceAll("】", "]").replaceAll("！", "!");//替换中文标号
+        String regEx = "[『』]"; // 清除掉特殊字符
         Pattern p = Pattern.compile(regEx);
         Matcher m = p.matcher(str);
         return m.replaceAll("").trim();

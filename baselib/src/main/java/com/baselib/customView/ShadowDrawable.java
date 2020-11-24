@@ -102,7 +102,6 @@ public class ShadowDrawable extends Drawable {
 	public void setAlpha(int alpha) {
 		mShadowPaint.setAlpha(alpha);
 	}
-
 	@Override
 	public void setColorFilter(@Nullable ColorFilter colorFilter) {
 		mShadowPaint.setColorFilter(colorFilter);

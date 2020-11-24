@@ -48,6 +48,10 @@ import java.io.IOException;
 import androidx.annotation.ColorInt;
 import androidx.annotation.Nullable;
 
+import com.baselib.dialog.RequestPermissionDialog;
+import com.yanzhenjie.permission.AndPermission;
+import com.yanzhenjie.permission.runtime.Permission;
+
 /**
  * 工具类（不建议外部调用)
  *
@@ -385,6 +389,31 @@ public final class Utils {
             drawable.setColorFilter(colorFilter);
         }
         return colorFilter;
+    }
+
+    /**
+     * 权限申请
+     * 有权限也会出现一个提示短暂的提示框
+     *
+     * @param hint 提示语
+     */
+    public static void RequestPermission(String hint, Context context) {
+        AndPermission.with(context)
+                .runtime()
+                .permission(Permission.Group.STORAGE)
+                .onDenied(data -> {
+                    new RequestPermissionDialog.Builder()
+                            .setContext(context)
+                            .setContent(hint).setOnclickListener(() -> {
+                        if (AndPermission.hasAlwaysDeniedPermission(context, data)) {
+                            // 权限被用户禁止团出,到设置页面
+                            AndPermission.with(context)
+                                    .runtime()
+                                    .setting()
+                                    .start(1);
+                        }
+                    }).build().show();
+                }).start();
     }
 
 }

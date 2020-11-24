@@ -130,24 +130,44 @@
         <item name="android:orientation">vertical</item>
     </style>
 
-    <style name="Gray9Text11" parent="BaseText">
+    <style name="Gray9Text11" parent="Text11">
         <item name="android:textColor">@color/gray999</item>
-        <item name="android:textSize">@dimen/x11</item>
     </style>
-    <style name="Gray6Text11" parent="BaseText">
+
+    <style name="Gray6Text11" parent="Text11">
         <item name="android:textColor">@color/black6</item>
-        <item name="android:textSize">@dimen/x11</item>
     </style>
 
     <style name="Text9" parent="BaseText">
         <item name="android:textSize">@dimen/x9</item>
     </style>
+
     <style name="Text11" parent="BaseText">
         <item name="android:textSize">@dimen/x11</item>
     </style>
+
+    <style name="Text13" parent="BaseText">
+        <item name="android:textSize">@dimen/x11</item>
+    </style>
+
     <style name="BlueText11" parent="Text11">
         <item name="android:textColor">@color/blue00a0f0</item>
-        <item name="android:textSize">@dimen/x11</item>
+    </style>
+
+    <style name="Black6Text11" parent="Text11">
+        <item name="android:textColor">@color/black6</item>
+    </style>
+
+    <style name="Black6Text13" parent="Text13">
+        <item name="android:textColor">@color/black6</item>
+    </style>
+
+    <style name="BlueText13" parent="Text13">
+        <item name="android:textColor">@color/blue00a0f0</item>
+    </style>
+
+    <style name="Gray9Text13" parent="Text13">
+        <item name="android:textColor">@color/gray999</item>
     </style>
 
 </resources>

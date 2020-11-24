@@ -1,5 +1,7 @@
 package com.app.ccmvp.net;
 
+import android.util.Log;
+
 import com.google.gson.JsonParseException;
 
 import org.json.JSONException;
@@ -20,6 +22,7 @@ public class ExceptionHandle {
     private static final int BAD_GATEWAY = 502;
     private static final int SERVICE_UNAVAILABLE = 503;
     private static final int GATEWAY_TIMEOUT = 504;
+    private static String NetError = "网络连接错误，请稍后再试!";
 
     public static ResponeThrowable handleException(Throwable e) {
         ResponeThrowable ex;
@@ -36,7 +39,7 @@ public class ExceptionHandle {
                 case BAD_GATEWAY:
                 case SERVICE_UNAVAILABLE:
                 default:
-                    ex.message = "网络连接错误";
+                    ex.message = NetError;
                     break;
             }
             return ex;
@@ -49,23 +52,27 @@ public class ExceptionHandle {
                 || e instanceof JSONException
             /*|| e instanceof ParseException*/) {
             ex = new ResponeThrowable(e, ERROR.PARSE_ERROR);
-            ex.message = "解析错误";
+            ex.message = NetError;
             return ex;
         } else if (e instanceof ConnectException) {
             ex = new ResponeThrowable(e, ERROR.NETWORD_ERROR);
-            ex.message = "网络连接错误";
+            ex.message = NetError;
             return ex;
         } else if (e instanceof javax.net.ssl.SSLHandshakeException) {
             ex = new ResponeThrowable(e, ERROR.SSL_ERROR);
-            ex.message = "证书验证失败";
+            ex.message = "证书验证失败，请联系管理员";
             return ex;
         } else if (e instanceof java.net.UnknownHostException) {
             ex = new ResponeThrowable(e, ERROR.SSL_ERROR);
-            ex.message = "网络连接错误";
+            ex.message = NetError;
+            return ex;
+        } else if (e instanceof java.net.SocketTimeoutException) {
+            ex = new ResponeThrowable(e, ERROR.TIMEOUT_ERROR);
+            ex.message = NetError;
             return ex;
         } else {
             ex = new ResponeThrowable(e, ERROR.UNKNOWN);
-            ex.message = "未知错误";
+            ex.message = "未知错误,请稍后再试";
             return ex;
         }
     }
@@ -95,6 +102,10 @@ public class ExceptionHandle {
          * 证书出错
          */
         public static final int SSL_ERROR = 1005;
+        /**
+         * 连接超时
+         */
+        public static final int TIMEOUT_ERROR = 1006;
     }
 
     public static class ResponeThrowable extends Exception {

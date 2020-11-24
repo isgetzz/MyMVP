@@ -13,6 +13,6 @@ public class SystemModel implements SystemContract.Model {
     @Override
     public Observable getSystemData() {
         return ApiEngine.getInstance().getApiService()
-                .getSystemData().compose(RxSchedulers.switchThread());
+                .getNewDataSheHui("", "5f902ef52c18d3b3e70a4c3c6185bef9").compose(RxSchedulers.switchThread());
     }
 }

@@ -10,7 +10,7 @@
         <logLevel value="2"/>
         <!-- 是否检查网络 true: 检查网络，false: 不检查网络-->
         <netCheck value="false"/>
-        <!--除非无法使用注解，否则不建议使用广播来接受任务状态，true：使用广播接收任务状态，false：不适用广播接收状态 -->
+        <!--除非无法使用注解，否则不建议使·用广播来接受任务状态，true：使用广播接收任务状态，false：不适用广播接收状态 -->
         <!-- http://aria.laoyuyu.me/aria_doc/api/use_broadcast.html -->
         <useBroadcast value="true"/>
         <!--断网的时候是否重试，true：断网也重试；false：断网不重试，直接走失败的回调-->

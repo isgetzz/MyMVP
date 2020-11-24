@@ -6,21 +6,22 @@ import java.io.Serializable;
  * 基础数据类
  */
 public class BaseResponse implements Serializable {
-    private String code;
-    private String msg;
-    public String getCode() {
-        return code;
+    private int error_code;
+    private String reason;
+
+    public int getError_code() {
+        return error_code;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setError_code(int error_code) {
+        this.error_code = error_code;
     }
 
-    public String getMsg() {
-        return msg;
+    public String getReason() {
+        return reason;
     }
 
-    public void setMsg(String msg) {
-        this.msg = msg;
+    public void setReason(String reason) {
+        this.reason = reason;
     }
 }

@@ -6,6 +6,7 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 
@@ -61,7 +62,9 @@ public class MiniLoadingView extends View {
     private void initPaint() {
         mPaint = new Paint();
         mPaint.setColor(mPaintColor);
+        //抗锯齿,边缘平滑
         mPaint.setAntiAlias(true);
+        //画笔线的样式 Paint.Cap.BUTT(无)、Paint.Cap.SQUARE(方形)、Paint.Cap.ROUND(圆角)
         mPaint.setStrokeCap(Paint.Cap.ROUND);
     }
 
@@ -73,13 +76,18 @@ public class MiniLoadingView extends View {
 
     public void setSize(int size) {
         mSize = size;
+        //invalidate() 重新绘制 onDraw
+        //重新绘制高度 onMeasure、onLayout、onDraw(view位置改变会调用)
         requestLayout();
     }
 
     private ValueAnimator.AnimatorUpdateListener mUpdateListener = new ValueAnimator.AnimatorUpdateListener() {
         @Override
         public void onAnimationUpdate(ValueAnimator animation) {
+            //监听动画更新 mAnimateValue 0-1
             mAnimateValue = (int) animation.getAnimatedValue();
+            //非UI postInvalidate();
+            //刷新重绘试图UI
             invalidate();
         }
     };
@@ -109,10 +117,10 @@ public class MiniLoadingView extends View {
 
     private void drawLoading(Canvas canvas, int rotateDegrees) {
         //进图条高、宽
-        int width = mSize / 12, height = mSize / 6;
+        int width = mSize / LINE_COUNT, height = mSize / 6;
         mPaint.setStrokeWidth(width);
         canvas.rotate(rotateDegrees, mSize / 2, mSize / 2);
-        canvas.translate(mSize /2, mSize / 2 );
+        canvas.translate(mSize / 2, mSize / 2);
         for (int i = 0; i < LINE_COUNT; i++) {
             canvas.rotate(DEGREE_PER_LINE);
             mPaint.setAlpha((int) (255f * (i + 1) / LINE_COUNT));
@@ -124,16 +132,21 @@ public class MiniLoadingView extends View {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        //测量高宽
         setMeasuredDimension(mSize, mSize);
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+        //drawRect 跟saveLa
+        //  yer(图层) 作用差不多
         int saveCount = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, Canvas.ALL_SAVE_FLAG);
         drawLoading(canvas, mAnimateValue * DEGREE_PER_LINE);
+        //恢复
         canvas.restoreToCount(saveCount);
     }
+
     @Override
     protected void onVisibilityChanged(@NonNull View changedView, int visibility) {
         super.onVisibilityChanged(changedView, visibility);

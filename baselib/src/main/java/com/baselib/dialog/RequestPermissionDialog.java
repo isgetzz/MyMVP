@@ -13,11 +13,11 @@ import com.baselib.R;
  * Created by cc on 2018/4/8.申请权限提示
  */
 public class RequestPermissionDialog extends Dialog implements View.OnClickListener {
-    private OnclickListener onclickListener;
+    private OnclickListener OnclickListener;
 
     private RequestPermissionDialog(Builder builder) {
         super(builder.context, R.style.DialogTheme);
-        onclickListener = builder.onclickListener;
+        OnclickListener = builder.OnclickListener;
         initUi(builder);
     }
 
@@ -30,7 +30,7 @@ public class RequestPermissionDialog extends Dialog implements View.OnClickListe
             content_tv.setText(builder.content);
         TextView determine_tv = findViewById(R.id.determine_tv);
         TextView cancel_tv = findViewById(R.id.cancel_tv);
-        if (onclickListener != null) {
+        if (OnclickListener != null) {
             determine_tv.setOnClickListener(this);
             cancel_tv.setOnClickListener(this);
         }
@@ -42,15 +42,15 @@ public class RequestPermissionDialog extends Dialog implements View.OnClickListe
     public static class Builder {
         private Context context;
         private String content;
-        private OnclickListener onclickListener;
+        private OnclickListener OnclickListener;
 
         public Builder setContext(Context context) {
             this.context = context;
             return this;
         }
 
-        public Builder setOnclickListener(OnclickListener onclickListener) {
-            this.onclickListener = onclickListener;
+        public Builder setOnclickListener(OnclickListener OnclickListener) {
+            this.OnclickListener = OnclickListener;
             return this;
         }
 
@@ -69,10 +69,10 @@ public class RequestPermissionDialog extends Dialog implements View.OnClickListe
     public void onClick(View v) {
         int id = v.getId();
         if (id == R.id.determine_tv) {
-            onclickListener.confirm();
+            OnclickListener.confirm();
             dismiss();
         } else if (id == R.id.cancel_tv) {
-            //   onclickListener.cancel();
+            //   OnclickListener.cancel();
             dismiss();
         }
     }

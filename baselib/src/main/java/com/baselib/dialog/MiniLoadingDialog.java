@@ -9,7 +9,7 @@ import androidx.annotation.StyleRes;
 import com.baselib.R;
 import com.baselib.customView.MiniLoadingView;
 import com.baselib.interfaceUtil.IMessageLoader;
-import com.baselib.interfaceUtil.OnclickListener;
+import com.baselib.interfaceUtil.cancelOnclickListener;
 
 
 /**
@@ -23,7 +23,7 @@ public class MiniLoadingDialog extends BaseDialog implements IMessageLoader {
     private MiniLoadingView mLoadingView;
     private TextView mTvTipMessage;
 
-    private OnclickListener mLoadingCancelListener;
+    private cancelOnclickListener mLoadingCancelListener;
 
     public MiniLoadingDialog(Context context) {
             super(context, R.style.DialogTheme, R.layout.xui_dialog_loading_mini);
@@ -133,7 +133,7 @@ public class MiniLoadingDialog extends BaseDialog implements IMessageLoader {
                 @Override
                 public void onCancel(DialogInterface dialogInterface) {
                     if (mLoadingCancelListener != null) {
-                        mLoadingCancelListener.noOnclick();
+                        mLoadingCancelListener.clickCancel();
                     }
                 }
             });
@@ -146,7 +146,7 @@ public class MiniLoadingDialog extends BaseDialog implements IMessageLoader {
      * @param listener
      */
     @Override
-    public void setLoadingCancelListener(OnclickListener listener) {
+    public void setLoadingCancelListener(cancelOnclickListener listener) {
         mLoadingCancelListener = listener;
     }
 }

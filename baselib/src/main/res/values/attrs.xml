@@ -48,17 +48,27 @@
     </declare-styleable>
     <!--下载进度条-->
     <declare-styleable name="HorizontalProgressBarWithNumber">
-        <attr format="color" name="progress_unreached_color"/>
-        <attr format="color" name="progress_reached_color"/>
-        <attr format="dimension" name="progress_reached_bar_height"/>
-        <attr format="dimension" name="progress_unreached_bar_height"/>
-        <attr format="dimension" name="progress_text_size"/>
-        <attr format="color" name="progress_text_color"/>
-        <attr format="dimension" name="progress_text_offset"/>
-        <attr format="enum" name="progress_text_visibility">
-            <enum name="visible" value="0"/>
-            <enum name="invisible" value="1"/>
+        <attr name="progress_unreached_color" format="color" />
+        <attr name="progress_reached_color" format="color" />
+        <attr name="progress_reached_bar_height" format="dimension" />
+        <attr name="progress_unreached_bar_height" format="dimension" />
+        <attr name="progress_text_size" format="dimension" />
+        <attr name="progress_text_color" format="color" />
+        <attr name="progress_text_offset" format="dimension" />
+        <attr name="progress_text_visibility" format="enum">
+            <enum name="visible" value="0" />
+            <enum name="invisible" value="1" />
         </attr>
     </declare-styleable>
-
+    <!--自定义View -->
+    <declare-styleable name="testView">
+        <attr name="view_color" format="color" />
+        <attr name="view_height" format="dimension" />
+        <attr name="view_width" format="dimension" />
+        <attr name="view_style" format="enum">
+            <enum name="visible" value="0" />
+            <enum name="invisible" value="1" />
+            <enum name="gone" value="2" />
+        </attr>
+    </declare-styleable>
 </resources>

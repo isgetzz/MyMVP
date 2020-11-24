@@ -19,5 +19,9 @@
     <string name="close" translatable="false">关闭</string>
     <string name="float_down_progress" translatable="false">%f/%f</string>
     <string name="string_down_progress" translatable="false">%s/%s</string>
+    <string name="down_speed_normal" translatable="false">0kb/s</string>
+    <string name="update_normal_content" translatable="false">发现新的版本，是否进行更新？</string>
+    <string name="update_cancel" translatable="false">下次再说</string>
+    <string name="update_affirm" translatable="false">立即更新</string>
 
 </resources>

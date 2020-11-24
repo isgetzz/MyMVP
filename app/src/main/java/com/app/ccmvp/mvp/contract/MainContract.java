@@ -12,12 +12,12 @@ import io.reactivex.Observable;
  */
 public interface MainContract {
     interface Model extends BaseModel {
-        Observable<BaseResponse> getMainData();
+        Observable<BaseResponse> getTopData();
 
-        Observable<BaseResponse> getSystemData();
+        Observable<BaseResponse> getSheHuiData();
     }
 
     abstract class Presenter extends BasePresenter<BaseView<BaseResponse>, Model> {
-        public abstract void getMainData(int dateType);
+        public abstract void getNewData(int dateType);
     }
 }

@@ -1,8 +1,8 @@
 package com.app.ccmvp.mvp.presenter;
 
 import com.app.ccmvp.base.BaseView;
+import com.app.ccmvp.bean.NewResultData;
 import com.app.ccmvp.net.BaseObserver;
-import com.app.ccmvp.bean.SystemData;
 import com.app.ccmvp.mvp.contract.SystemContract;
 import com.app.ccmvp.mvp.model.SystemModel;
 
@@ -22,9 +22,9 @@ public class SystemPresenter extends SystemContract.Presenter {
 
     @Override
     public void getSystemData() {
-        Disposable disposable = mModel.getSystemData().subscribeWith(new BaseObserver<SystemData>() {
+        Disposable disposable = mModel.getSystemData().subscribeWith(new BaseObserver<NewResultData>() {
             @Override
-            protected void onSuccess(SystemData o) {
+            protected void onSuccess(NewResultData o) {
                 mView.onSucceed(o);
             }
 

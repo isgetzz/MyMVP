@@ -13,12 +13,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.app.ccmvp.R;
 import com.app.ccmvp.util.StatusBarUtil;
 import com.app.ccmvp.util.Utils;
-import com.app.ccmvp.view.activity.MainActivity;
-import com.baselib.customView.MiniLoadingView;
 import com.baselib.dialog.MiniLoadingDialog;
-import com.baselib.dialog.RequestPermissionDialog;
-import com.yanzhenjie.permission.AndPermission;
-import com.yanzhenjie.permission.runtime.Permission;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -81,34 +79,8 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
 
     //当视图已经对用户不可见并且加载过数据，如果需要在切换到其他页面时停止加载数据，可以覆写此方法
     protected void initData() {
-
+        EventBus.getDefault().register(this);
     }
-
-    /**
-     * 权限申请
-     *
-     * @param hint 提示语
-     */
-    public void RequestPermission(String hint) {
-        AndPermission.with(this)
-                .runtime()
-                .permission(Permission.Group.STORAGE)
-                .onDenied(data -> {
-                    new RequestPermissionDialog.Builder()
-                            .setContext(this)
-                            .setContent(hint).setOnclickListener(() -> {
-                        if (AndPermission.hasAlwaysDeniedPermission(this, data)) {
-                            // 权限被用户禁止团出,到设置页面
-                            AndPermission.with(this)
-                                    .runtime()
-                                    .setting()
-                                    .start(1);
-                        }
-                    }).build().show();
-                }).start();
-
-    }
-
     /**
      * 接口请求成功隐藏
      */
@@ -121,9 +93,15 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
 
     protected abstract P onCreatePresenter();
 
+    @Subscribe
+    public void onEventBus(boolean b) {
+
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        EventBus.getDefault().unregister(this);
         if (mPresenter != null) {
             mPresenter.unSubscribe();
         }
@@ -132,7 +110,8 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
         }
         if (dialog != null)
             dialog.dismiss();
-        Utils.clearImgMemory(fail_image);
+        if (fail_image != null)
+            Utils.clearImgMemory(fail_image);
     }
 
 }

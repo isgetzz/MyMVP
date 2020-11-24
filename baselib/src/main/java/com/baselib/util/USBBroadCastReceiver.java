@@ -1,10 +1,9 @@
 package com.baselib.util;
 
-import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
+import android.content.pm.PackageInfo;
 import android.hardware.usb.UsbDevice;
 import android.hardware.usb.UsbManager;
 
@@ -17,7 +16,7 @@ import android.hardware.usb.UsbManager;
 public class USBBroadCastReceiver extends BroadcastReceiver {
 
     private UsbListener usbListener;
-    public static final String ACTION_USB_PERMISSION = "com.yzkj.switching.USB_PERMISSION";
+    public static final String ACTION_USB_PERMISSION = "USB_PERMISSION";
 
     public USBBroadCastReceiver(UsbListener usbListener) {
         this.usbListener = usbListener;

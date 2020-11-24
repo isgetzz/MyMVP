@@ -8,19 +8,19 @@ import io.reactivex.Observable;
 
 /**
  * Created by cc on 2018/10/30.
+ * 定义具体的数据类型
  */
 
 public class MainModel implements MainContract.Model {
     @Override
-    public Observable getMainData() {
-        return ApiEngine.getInstance().getApiService()
-                .getMainData().compose(RxSchedulers.switchThread());
+    public Observable getTopData() {
+        return ApiEngine.getInstance().getApiService().getNewDataTop("头条", "5f902ef52c18d3b3e70a4c3c6185bef9").compose(RxSchedulers.switchThread());
     }
 
     @Override
-    public Observable getSystemData() {
+    public Observable getSheHuiData() {
         return ApiEngine.getInstance().getApiService()
-                .getSystemData().compose(RxSchedulers.switchThread());
+                .getNewDataSheHui("shehui", "5f902ef52c18d3b3e70a4c3c6185bef9").compose(RxSchedulers.switchThread());
     }
 
 }

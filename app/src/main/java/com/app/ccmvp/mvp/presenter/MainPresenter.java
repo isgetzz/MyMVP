@@ -15,8 +15,8 @@ import io.reactivex.disposables.Disposable;
  */
 
 public class MainPresenter extends MainContract.Presenter {
-    public static final int MainData = 1;
-    public static final int BaseData = 2;
+    public static final int TopData = 1;
+    public static final int SheHuiData = 2;
 
     public MainPresenter(BaseView view) {
         mModel = new MainModel();
@@ -24,18 +24,21 @@ public class MainPresenter extends MainContract.Presenter {
     }
 
     @Override
-    public void getMainData(int dateType) {
+    public void getNewData(int dateType) {
         Observable<BaseResponse> observable;
-        if (dateType == MainData) {
-            observable = mModel.getMainData();
-        } else {
-            observable = mModel.getSystemData();
+        switch (dateType) {//根据需要请求对应的数据
+            case SheHuiData:
+                observable = mModel.getSheHuiData();
+                break;
+            default:
+                observable = mModel.getTopData();
         }
         Disposable disposable = observable.subscribeWith(new BaseObserver<BaseResponse>() {
             @Override
             protected void onSuccess(BaseResponse data) {
                 mView.onSucceed(data);
             }
+
             @Override
             protected void onFailure(String errorMsg) {
                 mView.onFail(errorMsg);

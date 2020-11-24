@@ -14,7 +14,7 @@ android {
     defaultConfig {
         minSdkVersion 16
         targetSdkVersion 29
-        versionCode 1
+        versionCode 5
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles 'consumer-rules.pro'
@@ -53,6 +53,8 @@ dependencies {
     api 'org.greenrobot:eventbus:3.1.1'
     //动画库
     implementation 'com.nineoldandroids:library:2.4.0'
-
+    //文件下载
+    api 'com.arialyy.aria:core:3.8.12'
+    annotationProcessor 'com.arialyy.aria:compiler:3.8.12'
 
 }
