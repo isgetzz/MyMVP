@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rl_progressBar"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/x13"
+    android:background="@drawable/shape5f0"
+    android:padding="@dimen/x25">
+
+    <TextView
+        android:id="@+id/tv_speed"
+        style="@style/Gray9Text13"
+        android:layout_marginBottom="@dimen/x10"
+        android:text="@string/down_speed_normal" />
+
+    <TextView
+        android:id="@+id/tv_downing"
+        style="@style/Gray9Text13"
+        android:layout_alignParentRight="true"
+        android:text="0/0mb" />
+
+
+    <com.baselib.customView.HorizontalProgressBarWithNumber
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/x15"
+        android:layout_alignTop="@id/tv_complete_loading"
+        android:layout_toLeftOf="@id/tv_complete_loading"
+        android:max="100"
+        app:progress_text_color="@color/blue00a0f0"
+        app:progress_text_size="@dimen/x13" />
+
+    <TextView
+        android:id="@+id/tv_complete_loading"
+        style="@style/Black6Text11"
+        android:layout_below="@id/tv_speed"
+        android:layout_alignParentRight="true"
+        android:layout_marginLeft="@dimen/x13"
+        android:gravity="center"
+        android:text="@string/start" />
+</RelativeLayout>

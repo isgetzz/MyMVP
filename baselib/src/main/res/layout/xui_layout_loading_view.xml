@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.baselib.customView.ARCLoadingView
+        android:id="@+id/arc_loading_view"
+        android:layout_width="@dimen/x60"
+        android:layout_height="@dimen/x60"
+        app:lv_auto="false"
+        app:lv_width="@dimen/x30" />
+
+    <TextView
+        android:id="@+id/tv_tip_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/x10"
+        android:text="@string/loading"
+        android:textSize="@dimen/x11" />
+</merge>

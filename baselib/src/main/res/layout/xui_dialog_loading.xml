@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/dialog_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/shape5f0"
+    android:gravity="center"
+    android:minWidth="60dp"
+    android:minHeight="60dp"
+    android:orientation="vertical"
+    android:padding="@dimen/dp_10">
+
+    <include layout="@layout/xui_layout_loading_view" />
+
+</LinearLayout>

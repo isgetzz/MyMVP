@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#03EC4E45" />
+            <corners android:radius="@dimen/x10" />
+            <padding
+                android:bottom="@dimen/x1"
+                android:left="@dimen/x1"
+                android:right="@dimen/x1"
+                android:top="@dimen/x1" />
+        </shape>
+    </item>
+
+    <item>
+        <shape android:shape="rectangle">
+            <corners android:radius="@dimen/x10" />
+            <solid android:color="#05EC4E45" />
+            <padding
+                android:bottom="@dimen/x1"
+                android:left="@dimen/x1"
+                android:right="@dimen/x1"
+                android:top="@dimen/x1" />
+        </shape>
+    </item>
+    <item>
+        <shape android:shape="rectangle">
+            <corners android:radius="@dimen/x10" />
+            <solid android:color="#10EC4E45" />
+            <padding
+                android:bottom="@dimen/x1"
+                android:left="@dimen/x1"
+                android:right="@dimen/x1"
+                android:top="@dimen/x1" />
+
+        </shape>
+    </item>
+    <item>
+        <shape android:shape="rectangle">
+            <corners android:radius="@dimen/x10" />
+            <solid android:color="#15EC4E45" />
+            <padding
+                android:bottom="@dimen/x1"
+                android:left="@dimen/x1"
+                android:right="@dimen/x1"
+                android:top="@dimen/x1" />
+        </shape>
+    </item>
+    <item>
+        <shape
+            android:shape="rectangle"
+            android:useLevel="false">
+            <solid android:color="#FFFFFF" />
+            <corners android:radius="@dimen/x10" />
+            <gradient
+                android:angle="270"
+                android:endColor="@color/red"
+                android:startColor="@color/red" />
+        </shape>
+    </item>
+    <!--
+    centerY centerX X、Y轴的渐变位置  gradientRadius radial必须设置
+        0从左到右，90从下到上 180 右到左 270 从上到下 gradientRadius 渐变半径
+    -->
+    <!-- "linear"	线性渐变.可以理解为 y=kx+b.
+     "radial"	A radial gradient.圆形渐变，起始颜色从cenralX,centralY点开始。
+     "sweep"	A sweeping line gradient.-->
+</layer-list>
